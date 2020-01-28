@@ -52,13 +52,10 @@ class Db
     }
 
     public function queryOne($sql, $params = [], $class = "") {
-        $pdoStatement = $this->getConnection()->prepare($sql);
-        $pdoStatement->execute($params);
+        $pdoStatement = $this->query($sql, $params);
         if($class) {
-            //var_dump($class);
             $pdoStatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
         }
-
         return $pdoStatement->fetch();
     }
 
@@ -67,11 +64,6 @@ class Db
     }
 
     public function lastInsertId() {
-        return $this->getConnection()->lastInsertId();
+        return $this->connection->lastInsertId();
     }
-
-    /*public function __toString()
-    {
-        return "Db";
-    }*/
 }

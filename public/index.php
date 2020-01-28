@@ -7,28 +7,31 @@ use app\engine\{Autoload, Db};
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
-$product = new Products();
+//TODO Подумать над формированием url в более читаемом виде
+$controllerName = $_GET['c'] ?: 'product';
+$actionName = $_GET['a'];
 
-//$user = new Users();
-//var_dump($user->getOne(2));
-//$product->insert();
-//$product->delete();
+$controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName) . "Controller";
+if (class_exists($controllerClass)) {
+    $controller = new $controllerClass();
+    $controller->runAction($actionName);
+} else die("404");
 
-//$product->id = 8;
 
-//$product->delete();
 
-//var_dump($product->getOne(3));
 
-//var_dump($product);
-//$product = $product->getOne(7);
-//var_dump($product);
+//Блок для проверки конструктора
+/*
+$product = new Products(6);
+var_dump($product);
 
-//var_dump($product->getAll());
+$product1 = new Products(['name' => 'Тестовое имя', 'description' => 'Тестовое описание', 'price' => '12345']);
+var_dump($product1);
 
-//var_dump($product->getAll());
+//Проверка update
+$product->name = "Новое имя2";
+$product->save();
 
-/*$product = $product->getOne(6);
-$product->price = 1234;
-$product->description = "Очень крепкий";
-$product->update();*/
+$product1->save();
+
+var_dump($product1);*/

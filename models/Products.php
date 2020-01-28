@@ -2,22 +2,23 @@
 
 namespace app\models;
 
-class Products extends Model {
-    //public $id;
-    public $name;
-    public $description;
-    public $price;
+class Products extends DbModel {
+    protected $id;
+    protected $name;
+    protected $description;
+    protected $price;
 
-    public function __construct($name = null, $description = null, $price = null)
-    {
-        parent::__construct();
-        $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
+    public $props = [
+        'name' => false,
+        'descprition' => false,
+        'price' => false
+    ];
+
+    public function __construct($params) {
+        parent::__construct($params);
     }
 
-
-    public function getTableName()
+    public static function getTableName()
     {
         return "products";
     }
